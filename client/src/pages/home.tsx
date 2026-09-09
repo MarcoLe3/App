@@ -1,17 +1,17 @@
 import {
     useQuery
 } from "@tanstack/react-query";
-import LoadingState from '@components/states/loading';
-import ErrorState from '@components/states/error';
-import SearchBar from '@components/searchBar';
+import LoadingState from '@pages/loading';
+import ErrorState from '@pages/error';
+import HeroCard from "@components/cards/heroCard";
 
 async function fetchEvents() {
     const response = await fetch('/events');
     if (!response.ok) {
         throw new Error('error fetching events');
     }
-
-    return JSON.stringify(response)
+    const events = await response.json();
+    return JSON.stringify(events);
 }
 
 export default function HomePage() {
@@ -20,16 +20,12 @@ export default function HomePage() {
         queryFn: fetchEvents
     })
 
+    if (isLoading) return <LoadingState />
+    if (isError) return <ErrorState />
+
     return (
-        <>
-            <SearchBar />
-            <div>
-                {
-                    isLoading ? <LoadingState/> : 
-                    error ? <ErrorState/> : 
-                    <p>{events}</p>
-                }
-            </div>
-        </>
+        <div className="">
+            <HeroCard />
+        </div>
     );
 }

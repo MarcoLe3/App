@@ -1,0 +1,55 @@
+name: Server CI
+
+on:
+  push:
+    paths:
+      - "server/**"
+      - ".github/workflows/server-ci.yml"
+  pull_request:
+    paths:
+      - "server/**"
+      - ".github/workflows/server-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: server
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+
+      - name: Set up uv and Python
+        uses: astral-sh/setup-uv@v9
+        with:
+          python-version: "3.14.4"
+          enable-cache: true
+          cache-dependency-glob: "server/requirements.txt"
+
+      - name: Install dependencies
+        run: |
+          uv venv .venv
+          uv pip install -r requirements.txt
+          uv pip check
+
+      # Catch syntax errors and undefined names without enforcing formatting.
+      - name: Check Python code
+        run: uvx ruff check --select E9,F63,F7,F82 .
+
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+
+      # Build only; this does not publish an image or start the database.
+      - name: Build server image
+        run: docker build -t server-ci ./server
