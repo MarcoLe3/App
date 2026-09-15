@@ -1,4 +1,4 @@
-import type {Event} from "../types";
+import type {Event} from "@/type/event.ts";
 
 interface SearchResultsProps {
     events: Event[],

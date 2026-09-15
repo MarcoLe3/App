@@ -2,7 +2,7 @@ import { useState } from 'react';
 import LoadingState from '@/components/ui/LoadingState';
 import ErrorState from '@/components/ui/ErrorState';
 import HeroSection from './HeroSection';
-import EventCard from '@/features/events/components/EventCard';
+import EventCard from '@/components/events/EventCard';
 import { useEvents } from '@/features/events/queries';
 
 export default function HomePage() {

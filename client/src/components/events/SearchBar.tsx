@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDebounce } from '@/hooks/useDebounce';
-import { useEventSearch } from '../queries';
+import { useEventSearch } from '@/hooks/eventQuery'
 import SearchResults from './SearchResults';
 
 export default function SearchBar() {

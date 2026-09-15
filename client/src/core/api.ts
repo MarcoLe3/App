@@ -1,4 +1,4 @@
-import type { Event } from './types';
+import type { Event } from '@/type/event.ts';
 
 export async function fetchEvents(offset: number, limit: number): Promise<Event[]> {
   const response = await fetch(`/api/events?limit=${limit}&offset=${offset}`);

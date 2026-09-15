@@ -1,4 +1,4 @@
-import SearchBar from "@/features/events/components/SearchBar"
+import SearchBar from "@/components/events/SearchBar"
 
 export default function HeroSection() {
     return (

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchEvents, searchEvents } from './api';
+import { fetchEvents, searchEvents } from '@/core/api';
 
 export function useEvents(offset: number, limit = 10) {
   return useQuery({
