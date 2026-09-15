@@ -12,10 +12,10 @@ def get_es() -> AsyncElasticsearch:
     return ElasticsearchClient.es
 
 @router.get("/events/search")
-async def search_events(es: AsyncElasticsearch = Depends(get_es)) -> SearchResponse:
+async def search_events(request: SearchRequest, es: AsyncElasticsearch = Depends(get_es)) -> SearchResponse:
     try:
         filter = SearchFilter()
         response = await es.search(index="events", body={"query": {"match_all": {}}})
         return await search_event(es, SearchRequest(**response), filter)
     except Exception as e:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+        raise 

@@ -12,8 +12,16 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
-      '@components': path.resolve(__dirname, 'src/components'),
-      '@pages': path.resolve(__dirname, 'src/pages'),
+      '@': path.resolve(__dirname, 'src'),
     }
-  }
+  },
+  server: {
+  proxy: {
+      '/api': {
+        target: 'http://api:8000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
 })

@@ -1,10 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  --font-apple: -apple-system;
+  --font-apple: -apple-system, BlinkMacSystemFont;
 
   --color-hero-background: #071521;
   --color-page-background: #F5F7FA;
 
   --color-primary-text: #111827;
+
+  --color-search-loading-bar: #e2e8f0;
+
 }

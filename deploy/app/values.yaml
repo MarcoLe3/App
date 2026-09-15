@@ -1,0 +1,15 @@
+api:
+  replicas: 1
+  port: 8000
+  image:
+    repository: app-api
+    tag: dev
+    pullPolicy: IfNotPresent
+
+client:
+  replicas: 1
+  port: 3000
+  image:
+    repository: app-client
+    tag: dev
+    pullPolicy: IfNotPresent
