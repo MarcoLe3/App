@@ -14,10 +14,6 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: server-ci-${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -37,18 +33,15 @@ jobs:
           enable-cache: true
           cache-dependency-glob: "server/requirements.txt"
 
-      # Catch syntax errors and undefined names without enforcing formatting.
-      - name: Check Python code
-        run: uvx ruff check --select E9,F63,F7,F82 .
-
-      - name: Check Python syntax
-        run: uv run --no-project python -m compileall -q -x '(^|/)(\.venv|__pycache__)/' .
-
       - name: Install dependencies
         run: |
           uv venv .venv
-          uv pip install --python .venv/bin/python -r requirements.txt
-          uv pip check --python .venv/bin/python
+          uv pip install -r requirements.txt
+          uv pip check
+
+      # Catch syntax errors and undefined names without enforcing formatting.
+      - name: Check Python code
+        run: uvx ruff check --select E9,F63,F7,F82 .
 
   build:
     runs-on: ubuntu-latest
