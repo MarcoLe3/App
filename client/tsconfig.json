@@ -1,22 +1,12 @@
 {
-  "compilerOptions": {
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+    "compilerOptions": {
+        "paths": {
+            "@/*": ["./src/*"],
+        },
+        "target": "esnext",
+        "jsx": "react-jsx",
+        "module": "ESNext",
+        "noEmit": true
     },
-    "target": "ES2022",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "types": ["vite/client"],
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "isolatedModules": true,
-    "verbatimModuleSyntax": true,
-    "strict": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "skipLibCheck": true
-  },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+    "include": ["src"]
 }
