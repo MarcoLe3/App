@@ -1,11 +1,12 @@
 import jwt
-from fastapi import APIRouter, Depends, HTTPException, Header, status
+from fastapi import APIRouter, Depends
 from pwdlib import PasswordHash
 from datetime import datetime, timedelta, timezone
-from typing import Annotated
 from pydantic import BaseModel
+import asyncpg
 
 from core import ACCESS_TOKEN_EXPIRE_MINUTES, SECRET_KEY, ALGORITHM
+from .sql_queries import FETCH_USER
 
 router = APIRouter()
 password_hash = PasswordHash()
@@ -14,9 +15,10 @@ class Token(BaseModel):
     access_token: str
     token_type: str
 
-def get_user(db, username: str):
-    if user := db.get(username):
-        return user
+async def get_user(pool: asyncpg.Pool, username: str):
+    async with pool.acquire() as connection:
+        if user := await connection.fetch(FETCH_USER, username):
+            return user
 
 def create_access_token(data: dict, expires_delta):
     to_encode = data.copy()
